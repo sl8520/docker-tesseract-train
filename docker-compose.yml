@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  ubuntu:
+    build:
+      context: ./ubuntu
+    working_dir: /var/volume
+    volumes:
+      - ./volume:/var/volume
+    tty: true
