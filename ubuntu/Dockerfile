@@ -37,6 +37,8 @@ COPY tesstrain-master.zip /data_save/tesstrain-master.zip
 RUN unzip /data_save/tesstrain-master.zip -d /data_save && \
   rm -f /data_save/tesstrain-master.zip  && \
   cd /data_save/tesstrain-master && \
+  mkdir -p /data_save/tesstrain-master/data/foo-ground-truth && \
+  unzip ocrd-testset.zip -d /data_save/tesstrain-master/data/foo-ground-truth && \
   pip install -r requirements.txt  && \
   make leptonica tesseract
 
