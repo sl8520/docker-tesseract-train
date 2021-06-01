@@ -6,7 +6,7 @@ services:
       context: ./ubuntu
       args:
         - TESSTRAIN_VERSION=${TESSTRAIN_VERSION}
-    working_dir: /var/volume
+    working_dir: /tesstrain
     volumes:
-      - ./volume:/var/volume
+      - ./tesstrain:/tesstrain
     tty: true

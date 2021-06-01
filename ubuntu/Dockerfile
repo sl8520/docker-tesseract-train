@@ -44,7 +44,8 @@ RUN wget -O tesstrain-${TESSTRAIN_VERSION}.zip https://github.com/tesseract-ocr/
   unzip tesstrain-${TESSTRAIN_VERSION}.zip && \
   rm -f tesstrain-${TESSTRAIN_VERSION}.zip && \
   mv tesstrain-${TESSTRAIN_VERSION} tesstrain && \
-  cd tesstrain && \
+  mv tesstrain/* ./ && \
+  rm -r tesstrain && \
   mkdir -p data/foo-ground-truth && \
   unzip ocrd-testset.zip -d data/foo-ground-truth && \
   pip install -r requirements.txt  && \
