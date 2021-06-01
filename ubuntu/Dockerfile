@@ -1,6 +1,9 @@
 FROM ubuntu:18.04
 
-# 安裝所需套件
+# Set Environment Variables
+ENV DEBIAN_FRONTEND noninteractive
+
+# Install packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   wget \
@@ -31,14 +34,19 @@ RUN apt-get update && \
   python3.6 -m pip install wheel \
   && rm -rf /var/lib/apt/lists/*
 
-# tesstrain commit 40334e4e8abc6ea793e481b21bcd8e076fa7a8ba
-COPY tesstrain-master.zip /data_save/tesstrain-master.zip
+ARG TESSTRAIN_VERSION
+ENV TESSTRAIN_VERSION ${TESSTRAIN_VERSION}
 
-RUN unzip /data_save/tesstrain-master.zip -d /data_save && \
-  rm -f /data_save/tesstrain-master.zip  && \
-  cd /data_save/tesstrain-master && \
-  mkdir -p /data_save/tesstrain-master/data/foo-ground-truth && \
-  unzip ocrd-testset.zip -d /data_save/tesstrain-master/data/foo-ground-truth && \
+WORKDIR /data_save
+
+# Get tesstrain
+RUN wget -O tesstrain-${TESSTRAIN_VERSION}.zip https://github.com/tesseract-ocr/tesstrain/archive/${TESSTRAIN_VERSION}.zip && \
+  unzip tesstrain-${TESSTRAIN_VERSION}.zip && \
+  rm -f tesstrain-${TESSTRAIN_VERSION}.zip && \
+  mv tesstrain-${TESSTRAIN_VERSION} tesstrain && \
+  cd tesstrain && \
+  mkdir -p data/foo-ground-truth && \
+  unzip ocrd-testset.zip -d data/foo-ground-truth && \
   pip install -r requirements.txt  && \
   make leptonica tesseract
 

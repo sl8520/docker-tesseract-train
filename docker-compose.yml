@@ -4,6 +4,8 @@ services:
   ubuntu:
     build:
       context: ./ubuntu
+      args:
+        - TESSTRAIN_VERSION=${TESSTRAIN_VERSION}
     working_dir: /var/volume
     volumes:
       - ./volume:/var/volume
